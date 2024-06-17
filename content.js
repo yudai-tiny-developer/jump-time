@@ -36,7 +36,7 @@ function main() {
         time_current.addEventListener('focusout', e => {
             time_current.classList.remove('_jump_time_edit');
 
-            const parts = time_current.textContent.split(':').map(v => parseInt(v));
+            const parts = time_current.textContent.split(':').map(v => Math.trunc(v));
             if (parts.length === 1 && !isNaN(parts[0])) {
                 video.currentTime = parts[0];
             } else if (parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
@@ -44,7 +44,7 @@ function main() {
             } else if (parts.length === 3 && !isNaN(parts[0]) && !isNaN(parts[1]) && !isNaN(parts[2])) {
                 video.currentTime = parts[0] * 3600 + parts[1] * 60 + parts[2];
             } else {
-                time_current.textContent = prev_textContent;
+                time_current.innerText = prev_textContent;
             }
 
             if (!prev_paused) {
