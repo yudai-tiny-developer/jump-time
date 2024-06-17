@@ -27,7 +27,7 @@ function main() {
 
         time_current.addEventListener('blur', e => {
             const parts = time_current.textContent.split(':').map(v => parseInt(v));
-            if (parts.length === 1) {
+            if (parts.length === 1 && !isNaN(parts[0])) {
                 video.currentTime = parts[0];
             } else if (parts.length === 2) {
                 video.currentTime = parts[0] * 60 + parts[1];
