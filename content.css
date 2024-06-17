@@ -1,3 +1,5 @@
 span.ytp-time-current._jump_time_edit {
-    font-size: 200%;
+    font-size: 200% !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
 }
