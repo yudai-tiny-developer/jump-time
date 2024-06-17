@@ -29,9 +29,9 @@ function main() {
             const parts = time_current.textContent.split(':').map(v => parseInt(v));
             if (parts.length === 1 && !isNaN(parts[0])) {
                 video.currentTime = parts[0];
-            } else if (parts.length === 2) {
+            } else if (parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
                 video.currentTime = parts[0] * 60 + parts[1];
-            } else if (parts.length === 3) {
+            } else if (parts.length === 3 && !isNaN(parts[0]) && !isNaN(parts[1]) && !isNaN(parts[2])) {
                 video.currentTime = parts[0] * 3600 + parts[1] * 60 + parts[2];
             }
 
