@@ -1,19 +1,5 @@
 const app = document.querySelector('ytd-app') ?? document.body;
 
-new MutationObserver((mutations, observer) => {
-    const player = app.querySelector('div#movie_player');
-    if (!player) {
-        return;
-    }
-
-    const time_current = player.querySelector('span.ytp-time-current');
-    const video = player.querySelector('video.video-stream');
-    if (time_current && video) {
-        observer.disconnect();
-        apply_extention(time_current, video);
-    }
-}).observe(app, { childList: true, subtree: true });
-
 let time_current_confirm;
 let prev_textContent;
 let prev_paused;
@@ -71,3 +57,17 @@ function apply_extention(time_current, video) {
         }
     });
 }
+
+new MutationObserver((mutations, observer) => {
+    const player = app.querySelector('div#movie_player');
+    if (!player) {
+        return;
+    }
+
+    const time_current = player.querySelector('span.ytp-time-current');
+    const video = player.querySelector('video.video-stream');
+    if (time_current && video) {
+        observer.disconnect();
+        apply_extention(time_current, video);
+    }
+}).observe(app, { childList: true, subtree: true });
