@@ -1,14 +1,14 @@
-let time_current_confirm;
-let prev_textContent;
-let prev_paused;
+import(chrome.runtime.getURL('common.js')).then(common => {
+    if (!common.isLiveChat(location.href)) {
+        main(document.querySelector('ytd-app') ?? document.body, common);
+    }
+});
 
-const app = document.querySelector('ytd-app') ?? document.body;
+function main(app, common) {
+    let time_current_confirm;
+    let prev_textContent;
+    let prev_paused;
 
-if (!window.location.href.startsWith('https://www.youtube.com/live_chat?')) {
-    main();
-}
-
-function main() {
     function apply_extention(time_current, video) {
         time_current.setAttribute('contenteditable', 'plaintext-only');
 
