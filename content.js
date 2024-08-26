@@ -72,7 +72,6 @@ function main(app, common) {
         const time_current = player.querySelector('span.ytp-time-current');
         const video = player.querySelector('video.video-stream');
         if (time_current && video) {
-            observer.disconnect();
             apply_extention(time_current, video);
         }
     }).observe(app, { childList: true, subtree: true });
