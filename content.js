@@ -1,18 +1,34 @@
 import(chrome.runtime.getURL('common.js')).then(common => {
     if (!common.isLiveChat(location.href)) {
-        main(document.querySelector('ytd-app') ?? document.body, common);
+        main(document.querySelector('ytd-app') ?? document.body);
     }
 });
 
-function main(app, common) {
+function main(app) {
     let time_current_confirm;
     let prev_textContent;
     let prev_paused;
 
-    function apply_extention(time_current, video) {
+    function loadSettings() {
+        const time_current = app.querySelector('span.ytp-time-current');
+        if (!time_current) {
+            return false;
+        }
+
+        const video = app.querySelector('video.video-stream');
+        if (!video) {
+            return false;
+        }
+
+        update_buttons(time_current, video);
+
+        return true;
+    }
+
+    function update_buttons(time_current, video) {
         time_current.setAttribute('contenteditable', 'plaintext-only');
 
-        time_current.addEventListener('focusin', e => {
+        time_current.addEventListener('focusin', () => {
             time_current.classList.add('_jump_time_edit');
 
             prev_textContent = time_current.textContent;
@@ -61,18 +77,13 @@ function main(app, common) {
                     time_current_confirm = true;
             }
         });
+
+        return true;
     }
 
-    new MutationObserver((mutations, observer) => {
-        const player = app.querySelector('div#movie_player');
-        if (!player) {
-            return;
+    const interval = setInterval(() => {
+        if (loadSettings()) {
+            clearInterval(interval);
         }
-
-        const time_current = player.querySelector('span.ytp-time-current');
-        const video = player.querySelector('video.video-stream');
-        if (time_current && video) {
-            apply_extention(time_current, video);
-        }
-    }).observe(app, { childList: true, subtree: true });
+    }, 200);
 }
