@@ -12,12 +12,12 @@ function main(app) {
     const detect_interval = setInterval(() => {
         const time_current = app.querySelector('span.ytp-time-current');
         if (!time_current) {
-            return false;
+            return;
         }
 
         const video = app.querySelector('video.video-stream');
         if (!video) {
-            return false;
+            return;
         }
 
         clearInterval(detect_interval);
