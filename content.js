@@ -73,5 +73,5 @@ function main(app) {
                     time_current_confirm = true;
             }
         });
-    }, 200);
+    }, 1000);
 }
