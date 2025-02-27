@@ -9,23 +9,19 @@ function main(app) {
     let prev_textContent;
     let prev_paused;
 
-    function loadSettings() {
+    const detect_interval = setInterval(() => {
         const time_current = app.querySelector('span.ytp-time-current');
         if (!time_current) {
-            return false;
+            return;
         }
 
         const video = app.querySelector('video.video-stream');
         if (!video) {
-            return false;
+            return;
         }
 
-        update_buttons(time_current, video);
+        clearInterval(detect_interval);
 
-        return true;
-    }
-
-    function update_buttons(time_current, video) {
         time_current.setAttribute('contenteditable', 'plaintext-only');
 
         time_current.addEventListener('focusin', () => {
@@ -77,13 +73,5 @@ function main(app) {
                     time_current_confirm = true;
             }
         });
-
-        return true;
-    }
-
-    const interval = setInterval(() => {
-        if (loadSettings()) {
-            clearInterval(interval);
-        }
-    }, 200);
+    }, 500);
 }
