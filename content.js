@@ -5,22 +5,27 @@ import(chrome.runtime.getURL('common.js')).then(common => {
 });
 
 function main(app) {
-    let time_current;
     let time_current_confirm;
     let prev_textContent;
     let prev_paused;
 
-    setInterval(() => {
-        const time_current_c = app.querySelector('span.ytp-time-current');
-        if (!time_current_c || time_current_c === time_current) {
+    const detect_interval = setInterval(() => {
+        const player = app.querySelector('div#movie_player');
+        if (!player) {
             return;
         }
-        time_current = time_current_c;
 
-        const video = app.querySelector('video.video-stream');
+        const time_current = player.querySelector('span.ytp-time-current');
+        if (!time_current) {
+            return;
+        }
+
+        const video = player.querySelector('video.video-stream');
         if (!video) {
             return;
         }
+
+        clearInterval(detect_interval);
 
         time_current.setAttribute('contenteditable', 'plaintext-only');
 
@@ -73,5 +78,5 @@ function main(app) {
                     time_current_confirm = true;
             }
         });
-    }, 1000);
+    }, 500);
 }
