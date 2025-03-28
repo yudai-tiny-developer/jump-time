@@ -20,11 +20,6 @@ function main(app) {
             return;
         }
 
-        const video = player.querySelector('video.video-stream');
-        if (!video) {
-            return;
-        }
-
         clearInterval(detect_interval);
 
         time_current.setAttribute('contenteditable', 'plaintext-only');
@@ -34,12 +29,15 @@ function main(app) {
 
             prev_textContent = time_current.textContent;
 
+            const video = player.querySelector('video.html5-main-video');
             prev_paused = video.paused;
             video.pause();
         });
 
         time_current.addEventListener('focusout', e => {
             time_current.classList.remove('_jump_time_edit');
+
+            const video = player.querySelector('video.html5-main-video');
 
             if (time_current_confirm) {
                 const parts = time_current.textContent.split(':').map(v => Math.trunc(v));
