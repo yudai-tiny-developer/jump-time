@@ -40,13 +40,29 @@ function main(app) {
             const video = player.querySelector('video.html5-main-video');
 
             if (time_current_confirm) {
-                const parts = time_current.textContent.split(':').map(v => Math.trunc(v));
+                const time_current_text = time_current.textContent;
+
+                const diff_mode = time_current_text.startsWith('-');
+
+                const parts = time_current_text.replace('-', '').split(':').map(v => Math.trunc(v));
                 if (parts.length === 1 && !isNaN(parts[0])) {
-                    video.currentTime = parts[0];
+                    if (diff_mode) {
+                        video.currentTime = video.duration - parts[0];
+                    } else {
+                        video.currentTime = parts[0];
+                    }
                 } else if (parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
-                    video.currentTime = parts[0] * 60 + parts[1];
+                    if (diff_mode) {
+                        video.currentTime = video.duration - (parts[0] * 60 + parts[1]);
+                    } else {
+                        video.currentTime = parts[0] * 60 + parts[1];
+                    }
                 } else if (parts.length === 3 && !isNaN(parts[0]) && !isNaN(parts[1]) && !isNaN(parts[2])) {
-                    video.currentTime = parts[0] * 3600 + parts[1] * 60 + parts[2];
+                    if (diff_mode) {
+                        video.currentTime = video.duration - (parts[0] * 3600 + parts[1] * 60 + parts[2]);
+                    } else {
+                        video.currentTime = parts[0] * 3600 + parts[1] * 60 + parts[2];
+                    }
                 } else {
                     time_current.innerText = prev_textContent;
                 }
@@ -75,6 +91,10 @@ function main(app) {
                 default:
                     time_current_confirm = true;
             }
+        });
+
+        time_current.addEventListener('click', e => {
+            e.stopPropagation();
         });
     }, 500);
 }
