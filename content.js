@@ -1,16 +1,16 @@
 import(chrome.runtime.getURL('common.js')).then(common => {
     if (!common.isLiveChat(location.href)) {
-        main(document.querySelector('ytd-app') ?? document.body);
+        main();
     }
 });
 
-function main(app) {
+function main() {
     let time_current_confirm;
     let prev_textContent;
     let prev_paused;
 
     const detect_interval = setInterval(() => {
-        const player = app.querySelector('div#movie_player');
+        const player = document.getElementById("movie_player");
         if (!player) {
             return;
         }
