@@ -11,14 +11,16 @@ function main() {
 
     const detect_interval = setInterval(() => {
         const player = document.getElementById("movie_player");
-        if (!player) {
-            return;
-        }
+        if (!player) return;
 
-        const time_current = player.querySelector('span.ytp-time-current');
-        if (!time_current) {
-            return;
+        let time_current;
+        const time_display = document.getElementsByTagName('player-time-display')?.[0];
+        if (time_display) { // new-style YouTube embedded player
+            time_current = time_display.querySelector('div.ytwPlayerTimeDisplayTimeChunks > div > span');
+        } else {
+            time_current = player.querySelector('span.ytp-time-current');
         }
+        if (!time_current) return;
 
         clearInterval(detect_interval);
 
