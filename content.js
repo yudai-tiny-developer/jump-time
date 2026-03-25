@@ -16,7 +16,7 @@ function main() {
         let time_current;
         const time_display = document.getElementsByTagName('player-time-display')?.[0];
         if (time_display) { // new-style YouTube embedded player
-            time_current = time_display.querySelector('div.ytwPlayerTimeDisplayTimeChunks > div > span');
+            time_current = time_display.querySelector('div.ytwPlayerTimeDisplayTimeChunks:not(.ytwPlayerTimeDisplayLiveDot) > div > span');
         } else {
             time_current = player.querySelector('span.ytp-time-current');
         }
